@@ -5,8 +5,8 @@ var methodOverride = require("method-override");
 var app = express();
 var aux = "";
 // Connection to DB mongoose.connect(‘mongodb://userC7L:12345678@172.30.11.133:27017/clients’);
-//mongoose.connect('mongodb://172.30.11.133:27017/clients', function(err, res) {
-mongoose.connect('mongodb://userC7L:12345678@172.30.11.133:27017/clients', function(err, res) {
+//mongoose.connect('mongodb://localhost:27017/clients', function(err, res) {
+mongoose.connect('mongodb://userC7L:12345678@0.0.0.0:27017/clients', function(err, res) {
  if(err){
    console.log('No Connected to Database - mongodb://172.30.11.133:27017/clients');
    throw err;
