@@ -5,7 +5,7 @@ var methodOverride = require("method-override");
 var app = express();
 var aux = "";
 // Connection to DB
-mongoose.connect('mongodb://localhost:27017/clients', function(err, res) {
+mongoose.connect('mongodb://172.30.11.133:27017/clients', function(err, res) {
  if(err){
    console.log('No Connected to Database');
    throw err;
