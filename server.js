@@ -55,7 +55,7 @@ app.use('/api', api);
 //});
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
-    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '172.30.199.20';
 
 app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
