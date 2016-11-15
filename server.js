@@ -7,10 +7,10 @@ var aux = "";
 // Connection to DB
 mongoose.connect('mongodb://172.30.11.133:27017/clients', function(err, res) {
  if(err){
-   console.log('No Connected to Database');
+   console.log('No Connected to Database - mongodb://172.30.11.133:27017/clients');
    throw err;
  } else {
-   console.log('Connected to Database');
+   console.log('Connected to Database - mongodb://172.30.11.133:27017/clients');
  }
 
 });
