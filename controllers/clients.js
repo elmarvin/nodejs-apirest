@@ -5,7 +5,7 @@ var Client  = mongoose.model('Client');
 exports.findAll = function(req, res) {
 	Client.find(function(err, clients) {
     if(err) res.send(500, err.message);
-    	console.log('GET /clients')
+  	console.log('GET /clients');
 		res.status(200).jsonp(clients);
 	});
 };
