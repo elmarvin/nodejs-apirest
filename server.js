@@ -4,17 +4,38 @@ var mongoose = require('mongoose');
 var methodOverride = require("method-override");
 var app = express();
 var aux = "";
+// parse application/json
+var bodyParser = require('body-parser')
+app.use(bodyParser.json())
+
+var mongodbUri = "mongodb://localhost:27017/clients";
+//var mongoURL = "mongodb://usermlab:12345678@ds133438.mlab.com:33438/utpltest";
+//var mongoURL = "mongodb://usermlab:12345678@ds133438.mlab.com:33438/utpltest";
 // Connection to DB mongoose.connect(‘mongodb://userC7L:12345678@172.30.11.133:27017/clients’);
-//mongoose.connect('mongodb://localhost:27017/clients', function(err, res) {
-mongoose.connect('mongodb://admin:jglo1gGTv51lUxQH@172.30.11.133:27017/clients', function(err, res) {
+var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
+                replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };
+
+//var mongodbUri = 'mongodb://usermlab:12345678@ds133438.mlab.com:33438/utpltest';
+
+mongoose.connect(mongodbUri, options);
+var conn = mongoose.connection;
+conn.on('error', console.error.bind(console, 'connection error:'));
+
+conn.once('open', function() {
+  // Wait for the database connection to establish, then start the app.
+  console.log("Conectado");
+});
+//mongoose.connect(mongoURL);
+/**mongoose.connect('mongodb://admin:jglo1gGTv51lUxQH@172.30.11.133:27017/clients', function(err, res) {
  if(err){
-   console.log('No Connected to Database - mongodb://172.30.11.133:27017/clients');
+   console.log('No Connected to Database');
+   console.log(err);
    throw err;
  } else {
-   console.log('Connected to Database - mongodb://172.30.11.133:27017/clients');
+   console.log('Connected to Database');
  }
 
-});
+});**/
 
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,6 +45,8 @@ app.use(methodOverride());
 // Import Models and Controllers
 var models     = require('./models/client')(app, mongoose);
 var ClientCtrl = require('./controllers/clients');
+var models     = require('./models/registros')(app, mongoose);
+var RegistrosCtrl = require('./controllers/registros');
 
 var router = express.Router();
 
@@ -45,6 +68,15 @@ api.route('/clients/:id')
   .get(ClientCtrl.findById)
   .put(ClientCtrl.update)
   .delete(ClientCtrl.delete);
+
+api.route('/registros')
+  .get(RegistrosCtrl.findAll)
+  .post(RegistrosCtrl.add);
+
+api.route('/registros/:id')
+  .get(RegistrosCtrl.findById)
+  .put(RegistrosCtrl.update)
+  .delete(RegistrosCtrl.delete);
 
 app.use('/api', api);
 
